@@ -75,7 +75,23 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function closeBanner() {
-    const banner = document.querySelector('.notification-banner');
-    banner.style.display = 'none';
+document.addEventListener('DOMContentLoaded', function() {
+    // Tampilkan notifikasi popup setelah halaman dimuat
+    const popup = document.getElementById('notificationPopup');
+    const overlay = document.getElementById('overlay');
+
+    function showPopup() {
+        popup.classList.add('show');
+        overlay.classList.add('show');
+    }
+
+    // Tunda tampilan popup selama 1 detik
+    setTimeout(showPopup, 1000);
+});
+
+function closePopup() {
+    const popup = document.getElementById('notificationPopup');
+    const overlay = document.getElementById('overlay');
+    popup.classList.remove('show');
+    overlay.classList.remove('show');
 }

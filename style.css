@@ -361,53 +361,72 @@ section.visible {
     transform: translateX(0);
 }
 
-.notification-banner {
-    position: relative;
+.notification-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 400px;
     background-color: #f4f4f4;
     border-radius: 10px;
-    overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin: 1rem auto; /* Lebih kecil dan berada di tengah */
-    max-width: 300px; /* Lebar maksimum yang lebih kecil */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-    padding: 0.5rem; /* Padding lebih kecil */
-    animation: slide-in 0.5s ease-out;
+    z-index: 1000;
+    display: none; /* Awalnya disembunyikan */
 }
 
-.notification-banner:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+.popup-content {
+    position: relative;
+    padding: 1rem;
+    text-align: center;
 }
 
-.notification-banner img {
-    width: 80%; /* Lebar gambar lebih kecil */
+.popup-content img {
+    width: 100%;
     height: auto;
     border-radius: 10px;
 }
 
-.close-banner {
+.close-popup {
     position: absolute;
-    top: 10px; /* Lebih kecil daripada sebelumnya */
-    right: 10px; /* Lebih kecil daripada sebelumnya */
+    top: 10px;
+    right: 10px;
     color: #333;
-    font-size: 2rem; /* Ukuran font lebih kecil */
+    font-size: 1.5rem;
     cursor: pointer;
     transition: color 0.3s;
 }
 
-.close-banner:hover {
+.close-popup:hover {
     color: #000;
 }
 
-@keyframes slide-in {
-    from {
-        transform: translateX(-100%);
-    }
-    to {
-        transform: translateX(0);
-    }
+/* Overlay untuk latar belakang gelap */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none; /* Awalnya disembunyikan */
 }
 
+.overlay.show {
+    display: block;
+}
+
+.notification-popup.show {
+    display: block;
+    animation: popup-slide-in 0.5s ease-out;
+}
+
+@keyframes popup-slide-in {
+    from {
+        transform: translate(-50%, -60%);
+    }
+    to {
+        transform: translate(-50%, -50%);
+    }
+}
