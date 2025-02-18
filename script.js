@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const nav = document.querySelector('nav');
     const overlay = document.getElementById('overlay');
     const navLinks = document.querySelectorAll('nav ul li a');
+    const sections = document.querySelectorAll('section');
 
     hamburger.addEventListener('click', function() {
         nav.classList.toggle('show');
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Auto-slide for gallery
+    // Auto-slide untuk galeri
     const slides = document.querySelector('.slides');
     const slideItems = document.querySelectorAll('.slide-item');
     let index = 0;
@@ -37,5 +38,44 @@ document.addEventListener('DOMContentLoaded', function() {
         slides.style.transform = `translateX(${-index * 100}%)`;
     }
 
-    setInterval(slideShow, 3000); // Change image every 3 seconds
+    setInterval(slideShow, 3000); // Ganti gambar setiap 3 detik
+
+    // Efek Gulir
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                if (entry.target.classList.contains('fade-in-left')) {
+                    entry.target.style.transform = 'translateX(0)';
+                } else if (entry.target.classList.contains('fade-in-right')) {
+                    entry.target.style.transform = 'translateX(0)';
+                } else if (entry.target.classList.contains('fade-in-top')) {
+                    entry.target.style.transform = 'translateY(0)';
+                } else if (entry.target.classList.contains('fade-in-bottom')) {
+                    entry.target.style.transform = 'translateY(0)';
+                }
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    sections.forEach((section, index) => {
+        // Assign different fade-in classes based on section index
+        if (index % 4 === 0) {
+            section.classList.add('fade-in-left');
+        } else if (index % 4 === 1) {
+            section.classList.add('fade-in-right');
+        } else if (index % 4 === 2) {
+            section.classList.add('fade-in-top');
+        } else {
+            section.classList.add('fade-in-bottom');
+        }
+        observer.observe(section);
+    });
 });
+
+function closeBanner() {
+    const banner = document.querySelector('.notification-banner');
+    banner.style.display = 'none';
+}

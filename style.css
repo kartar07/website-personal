@@ -332,3 +332,82 @@ footer {
         display: none;
     }
 }
+
+/* Efek Gulir */
+section {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+section.fade-in-left {
+    transform: translateX(-50px);
+}
+
+section.fade-in-right {
+    transform: translateX(50px);
+}
+
+section.fade-in-top {
+    transform: translateY(-50px);
+}
+
+section.fade-in-bottom {
+    transform: translateY(50px);
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.notification-banner {
+    position: relative;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 1rem auto; /* Lebih kecil dan berada di tengah */
+    max-width: 300px; /* Lebar maksimum yang lebih kecil */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    padding: 0.5rem; /* Padding lebih kecil */
+    animation: slide-in 0.5s ease-out;
+}
+
+.notification-banner:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.notification-banner img {
+    width: 80%; /* Lebar gambar lebih kecil */
+    height: auto;
+    border-radius: 10px;
+}
+
+.close-banner {
+    position: absolute;
+    top: 10px; /* Lebih kecil daripada sebelumnya */
+    right: 10px; /* Lebih kecil daripada sebelumnya */
+    color: #333;
+    font-size: 2rem; /* Ukuran font lebih kecil */
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-banner:hover {
+    color: #000;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
