@@ -247,6 +247,49 @@ footer {
     color: #666;
 }
 
+.jadwal-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 2rem;
+    padding: 2rem;
+    background: linear-gradient(to right, #f8f9fa, #e9ecef);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.jadwal-item {
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 45%;
+    transition: transform 0.3s;
+}
+
+.jadwal-item:hover {
+    transform: scale(1.05);
+}
+
+.jadwal-item h3 {
+    margin: 0;
+    color: #0056b3;
+}
+
+.jadwal-item p {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0.5rem 0;
+}
+
+.subtext {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 0.3rem;
+}
+
+
 @media (max-width: 768px) {
     header {
         padding: 1rem;

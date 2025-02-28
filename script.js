@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const overlay = document.getElementById('overlay');
     const navLinks = document.querySelectorAll('nav ul li a');
     const sections = document.querySelectorAll('section');
+    const popup = document.getElementById('notificationPopup');
 
     hamburger.addEventListener('click', function() {
         nav.classList.toggle('show');
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         nav.classList.remove('show');
         overlay.classList.remove('show');
         hamburger.classList.remove('active');
+        popup.classList.remove('show');
     });
 
     navLinks.forEach(link => {
@@ -31,62 +33,53 @@ document.addEventListener('DOMContentLoaded', function() {
     let index = 0;
 
     function slideShow() {
-        index++;
-        if (index >= slideItems.length) {
-            index = 0;
-        }
+        index = (index + 1) % slideItems.length;
         slides.style.transform = `translateX(${-index * 100}%)`;
     }
 
-    setInterval(slideShow, 3000); // Ganti gambar setiap 3 detik
+    setInterval(slideShow, 3000);
 
     // Efek Gulir
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                if (entry.target.classList.contains('fade-in-left')) {
-                    entry.target.style.transform = 'translateX(0)';
-                } else if (entry.target.classList.contains('fade-in-right')) {
-                    entry.target.style.transform = 'translateX(0)';
-                } else if (entry.target.classList.contains('fade-in-top')) {
-                    entry.target.style.transform = 'translateY(0)';
-                } else if (entry.target.classList.contains('fade-in-bottom')) {
-                    entry.target.style.transform = 'translateY(0)';
-                }
                 entry.target.classList.add('visible');
+                entry.target.style.transform = 'translateX(0)';
             }
         });
-    }, {
-        threshold: 0.1
-    });
+    }, { threshold: 0.1 });
 
     sections.forEach((section, index) => {
-        // Assign different fade-in classes based on section index
-        if (index % 4 === 0) {
-            section.classList.add('fade-in-left');
-        } else if (index % 4 === 1) {
-            section.classList.add('fade-in-right');
-        } else if (index % 4 === 2) {
-            section.classList.add('fade-in-top');
-        } else {
-            section.classList.add('fade-in-bottom');
-        }
+        const effectClass = ['fade-in-left', 'fade-in-right', 'fade-in-top', 'fade-in-bottom'][index % 4];
+        section.classList.add(effectClass);
         observer.observe(section);
     });
-});
 
-document.addEventListener('DOMContentLoaded', function() {
     // Tampilkan notifikasi popup setelah halaman dimuat
-    const popup = document.getElementById('notificationPopup');
-    const overlay = document.getElementById('overlay');
-
-    function showPopup() {
+    setTimeout(() => {
         popup.classList.add('show');
         overlay.classList.add('show');
-    }
+    }, 1000);
 
-    // Tunda tampilan popup selama 1 detik
-    setTimeout(showPopup, 1000);
+    // Jadwal Imsak dan Berbuka Puasa
+    const imsakTime = document.getElementById('imsak-time');
+    const berbukaTime = document.getElementById('berbuka-time');
+
+    // Ganti 'city' dengan nama kota yang sesuai
+    const city = 'Jakarta';
+    const apiURL = `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=Indonesia&method=2`;
+
+    fetch(apiURL)
+        .then(response => response.json())
+        .then(data => {
+            imsakTime.textContent = data.data.timings.Imsak;
+            berbukaTime.textContent = data.data.timings.Maghrib;
+        })
+        .catch(error => {
+            console.error('Error fetching jadwal:', error);
+            imsakTime.textContent = 'Gagal mengambil data';
+            berbukaTime.textContent = 'Gagal mengambil data';
+        });
 });
 
 function closePopup() {
